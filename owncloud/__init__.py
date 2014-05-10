@@ -16,6 +16,7 @@ import requests
 import xml.etree.ElementTree as ET
 import os
 
+
 class ResponseError(Exception):
     def __init__(self, res):
         # TODO: how to retrieve the error message ?
@@ -26,8 +27,10 @@ class ResponseError(Exception):
         Exception.__init__(self, "HTTP error: %i" % code)
         self.status_code = code
 
+
 class PublicShare():
     """Public share information"""
+
     def __init__(self, share_id, target_file, link, token):
         self.share_id = share_id
         self.target_file = target_file
@@ -36,14 +39,15 @@ class PublicShare():
 
     def __str__(self):
         return 'PublicShare(id=%i,path=%s,link=%s,token=%s)' % \
-                (self.share_id, self.target_file, self.link, self.token)
+               (self.share_id, self.target_file, self.link, self.token)
+
 
 class FileInfo():
     """File information"""
 
     __DATE_FORMAT = '%a, %d %b %Y %H:%M:%S %Z'
 
-    def __init__(self, path, file_type = 'file', attributes = None):
+    def __init__(self, path, file_type='file', attributes=None):
         self.path = path
         if path[-1] == '/':
             path = path[0:-1]
@@ -94,9 +98,9 @@ class FileInfo():
         :rtype: datetime object
         """
         return datetime.datetime.strptime(
-                self.attributes['{DAV:}getlastmodified'],
-                self.__DATE_FORMAT
-                )
+            self.attributes['{DAV:}getlastmodified'],
+            self.__DATE_FORMAT
+        )
 
     def is_dir(self):
         """Returns whether the file info is a directory
@@ -107,10 +111,11 @@ class FileInfo():
 
     def __str__(self):
         return 'File(path=%s,file_type=%s,attributes=%s)' % \
-            (self.path, self.file_type, self.attributes)
+               (self.path, self.file_type, self.attributes)
 
     def __repr__(self):
         return self.__str__()
+
 
 class Client():
     """ownCloud client"""
@@ -214,7 +219,7 @@ class Client():
             return res.content
         return False
 
-    def get_file(self, remote_path, local_file = None):
+    def get_file(self, remote_path, local_file=None):
         """Downloads a remote file
 
         :param remote_path: path to the remote file
@@ -225,9 +230,9 @@ class Client():
         """
         remote_path = self.__normalize_path(remote_path)
         res = self.__session.get(
-                self.__webdav_url + remote_path,
-                stream = True
-                )
+            self.__webdav_url + remote_path,
+            stream=True
+        )
         if res.status_code == 200:
             if local_file == None:
                 # use downloaded file name from Content-Disposition
@@ -251,11 +256,11 @@ class Client():
         """
         remote_path = self.__normalize_path(remote_path)
         url = self.url + 'index.php/apps/files/ajax/download.php?dir=' \
-            + urllib.quote(remote_path)
+              + urllib.quote(remote_path)
         res = self.__session.get(
-                url,
-                stream = True
-                )
+            url,
+            stream=True
+        )
         if res.status_code == 200:
             if local_file == None:
                 # use downloaded file name from Content-Disposition
@@ -277,7 +282,7 @@ class Client():
         :returns: True if the operation succeeded, False otherwise
         :raises: ResponseError in case an HTTP error status was returned
         """
-        return self.__make_dav_request('PUT', remote_path, data = data)
+        return self.__make_dav_request('PUT', remote_path, data=data)
 
     def put_file(self, remote_path, local_source_file, **kwargs):
         """Upload a file
@@ -294,10 +299,10 @@ class Client():
         """
         if kwargs.get('chunked', True):
             return self.__put_file_chunked(
-                    remote_path,
-                    local_source_file,
-                    **kwargs
-                    )
+                remote_path,
+                local_source_file,
+                **kwargs
+            )
 
         stat_result = os.stat(local_source_file)
 
@@ -309,11 +314,11 @@ class Client():
             remote_path += os.path.basename(local_source_file)
         file_handle = open(local_source_file, 'r', 8192)
         res = self.__make_dav_request(
-                'PUT',
-                remote_path,
-                data = file_handle,
-                headers = headers
-                )
+            'PUT',
+            remote_path,
+            data=file_handle,
+            headers=headers
+        )
         file_handle.close()
         return res
 
@@ -338,17 +343,17 @@ class Client():
         # gather files to upload
         for path, _, files in os.walk(local_directory):
             gathered_files.append(
-                    (path, basedir + path[len(local_directory):], files)
-                    )
+                (path, basedir + path[len(local_directory):], files)
+            )
 
         for path, remote_path, files in gathered_files:
             self.mkdir(target_path + remote_path + '/')
             for name in files:
                 if not self.put_file(
-                        target_path + remote_path + '/',
-                        path + '/' + name,
-                        **kwargs
-                        ):
+                                        target_path + remote_path + '/',
+                                        path + '/' + name,
+                                        **kwargs
+                ):
                     return False
         return True
 
@@ -384,11 +389,11 @@ class Client():
 
         if size == 0:
             return self.__make_dav_request(
-                    'PUT',
-                    remote_path,
-                    data = '',
-                    headers = headers
-                    )
+                'PUT',
+                remote_path,
+                data='',
+                headers=headers
+            )
 
         chunk_count = size / chunk_size
 
@@ -397,21 +402,21 @@ class Client():
 
         if size % chunk_size > 0:
             chunk_count += 1
-       
+
         for chunk_index in range(0, chunk_count):
             data = file_handle.read(chunk_size)
             if chunk_count > 1:
                 chunk_name = '%s-chunking-%s-%i-%i' % \
-                        (remote_path, transfer_id, chunk_count, chunk_index)
+                             (remote_path, transfer_id, chunk_count, chunk_index)
             else:
                 chunk_name = remote_path
 
             if not self.__make_dav_request(
                     'PUT',
                     chunk_name,
-                    data = data,
-                    headers = headers
-                ):
+                    data=data,
+                    headers=headers
+            ):
                 result = False
                 break
 
@@ -450,11 +455,11 @@ class Client():
         post_data = {'shareType': 3, 'path': path}
 
         res = self.__make_ocs_request(
-                'POST',
-                self.OCS_SERVICE_SHARE,
-                'shares',
-                data = post_data
-                )
+            'POST',
+            self.OCS_SERVICE_SHARE,
+            'shares',
+            data=post_data
+        )
         if res.status_code == 200:
             tree = ET.fromstring(res.text)
             self.__check_ocs_status(tree)
@@ -467,7 +472,7 @@ class Client():
             )
         raise ResponseError(res)
 
-    def get_attribute(self, app = None, key = None):
+    def get_attribute(self, app=None, key=None):
         """Returns an application attribute
 
         :param app: application id
@@ -483,10 +488,10 @@ class Client():
             if key != None:
                 path += '/' + urllib.quote(key)
         res = self.__make_ocs_request(
-                'GET',
-                self.OCS_SERVICE_PRIVATEDATA,
-                path
-                )
+            'GET',
+            self.OCS_SERVICE_PRIVATEDATA,
+            path
+        )
         if res.status_code == 200:
             tree = ET.fromstring(res.text)
             self.__check_ocs_status(tree)
@@ -519,11 +524,11 @@ class Client():
         """
         path = 'setattribute/' + urllib.quote(app) + '/' + urllib.quote(key)
         res = self.__make_ocs_request(
-                'POST',
-                self.OCS_SERVICE_PRIVATEDATA,
-                path,
-                data = {'value': value}
-                )
+            'POST',
+            self.OCS_SERVICE_PRIVATEDATA,
+            path,
+            data={'value': value}
+        )
         if res.status_code == 200:
             tree = ET.fromstring(res.text)
             self.__check_ocs_status(tree)
@@ -540,15 +545,39 @@ class Client():
         """
         path = 'deleteattribute/' + urllib.quote(app) + '/' + urllib.quote(key)
         res = self.__make_ocs_request(
-                'POST',
-                self.OCS_SERVICE_PRIVATEDATA,
-                path
-                )
+            'POST',
+            self.OCS_SERVICE_PRIVATEDATA,
+            path
+        )
         if res.status_code == 200:
             tree = ET.fromstring(res.text)
             self.__check_ocs_status(tree)
             return True
         raise ResponseError(res)
+
+    def set_user_preference(self, userid, appid, configkey, configvalue):
+        """Sets an user preference attribute
+
+        :param userid: key of the preference to set
+        :param appid: value to set
+        :param configkey: value to set
+        :param configvalue: value to set
+        :returns: True if the operation succeeded, False otherwise
+        :raises: ResponseError in case an HTTP error status was returned
+        """
+        path = 'userdata/' + urllib.quote(userid)
+        res = self.__make_ocs_request(
+            'PUT',
+            'cloud',
+            path,
+            data={configkey: configvalue}
+        )
+        if res.status_code == 200:
+            tree = ET.fromstring(res.text)
+            self.__check_ocs_status(tree)
+            return True
+        raise ResponseError(res)
+
 
     @staticmethod
     def __normalize_path(path):
@@ -641,8 +670,8 @@ class Client():
         :returns :class:`FileInfo`
         """
         href = urllib.unquote(
-                self.__strip_dav_path(dav_response.find('{DAV:}href').text)
-                )
+            self.__strip_dav_path(dav_response.find('{DAV:}href').text)
+        )
         file_type = 'file'
         if href[-1] == '/':
             file_type = 'dir'
