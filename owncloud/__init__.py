@@ -159,7 +159,7 @@ class Client():
         if res.status_code == 200:
             # Remove auth, no need to re-auth every call
             # so sending the auth every time for now
-            self.__session.auth = None
+            # self.__session.auth = None
             return
         self.__session.close()
         self.__session = None
