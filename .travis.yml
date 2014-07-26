@@ -10,6 +10,10 @@ branches:
   only:
     - travis_tests
 
+before_install:
+- sudo apt-get update
+- sudo apt-get install php5
+
 install:
   - bash ./before_install.sh $CORE_BRANCH
 
