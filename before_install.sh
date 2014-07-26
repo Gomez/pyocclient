@@ -58,7 +58,7 @@ function execute_tests {
     cd $BASEDIR
 
     # revert changes to tests/data
-    #git checkout tests/data/*
+    git checkout core/tests/data/*
 
     # reset data directory
     rm -rf $DATADIR
