@@ -12,7 +12,7 @@ WORKDIR=$PWD
 CORE_BRANCH=$1
 echo "Work directory: $WORKDIR"
 php5 -v
-php -i | grep xml
+php5 -i | grep xml
 git clone --depth 1 -b $CORE_BRANCH https://github.com/owncloud/core
 cd core
 git submodule update --init
@@ -77,7 +77,7 @@ function execute_tests {
 
     # trigger installation
     echo "INDEX"
-    php -f core/index.php
+    php5 -f core/index.php
     echo "END INDEX"
 
 }
