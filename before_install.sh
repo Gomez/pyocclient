@@ -78,9 +78,6 @@ function execute_tests {
     php -f core/index.php
     echo "END INDEX"
 
-    #test execution
-    cd tests
-    php -f enable_all.php
 }
 
 #
