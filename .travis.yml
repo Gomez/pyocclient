@@ -8,7 +8,7 @@ env:
 
 branches:
   only:
-    - master
+    - travis_tests
 
 install:
   - bash ./before_install.sh $CORE_BRANCH
