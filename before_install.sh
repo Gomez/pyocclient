@@ -34,7 +34,7 @@ ADMINLOGIN=admin
 BASEDIR=$PWD
 
 DBCONFIGS="mysql"
-PHPUNIT=$(which phpunit)
+#PHPUNIT=$(which phpunit)
 
 # use tmpfs for datadir - should speedup unit test execution
 DATADIR=$BASEDIR/data-autotest
