@@ -23,7 +23,7 @@ echo "New Workdir: $WORKDIR"
 #
 # install script
 #
-echo "New Workdir2: $WORKDIR"
+cd ../core
 
 DATABASENAME=oc_autotest
 DATABASEUSER=oc_autotest
@@ -58,20 +58,20 @@ function execute_tests {
     cd $BASEDIR
 
     # revert changes to tests/data
-    git checkout core/tests/data/*
+    git checkout tests/data/*
 
     # reset data directory
     rm -rf $DATADIR
     mkdir $DATADIR
 
-    cp $BASEDIR/core/tests/preseed-config.php $BASEDIR/core/config/config.php
+    cp $BASEDIR/tests/preseed-config.php $BASEDIR/config/config.php
 
     # copy autoconfig
-    cp $BASEDIR/tests/autoconfig-sqlite.php $BASEDIR/core/config/autoconfig.php
+    cp $BASEDIR/tests/autoconfig-sqlite.php $BASEDIR/config/autoconfig.php
 
     # trigger installation
     echo "INDEX"
-    php -f core/index.php
+    php -f index.php
     echo "END INDEX"
 
 }
