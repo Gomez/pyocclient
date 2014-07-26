@@ -98,7 +98,9 @@ echo "data directory:"
 ls -ll $DATADIR
 
 echo "owncloud.log:"
-cat $DATADIR/owncloud.log
+#cat $DATADIR/owncloud.log
 
 cd $BASEDIR
 
+cd ..
+bash ./runtests.sh
