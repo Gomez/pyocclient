@@ -68,7 +68,7 @@ function execute_tests {
     cp $BASEDIR/tests/autoconfig-sqlite.php $BASEDIR/config/autoconfig.php
 
     echo "config directory:"
-    chmod -R 777 $BASEDIR/config
+    chown www-data:www-data $BASEDIR
     ls -ll $BASEDIR/config
 
     echo "Base directory:"
