@@ -70,7 +70,7 @@ function execute_tests {
     # reset data directory
     rm -rf $DATADIR
     mkdir $DATADIR
- # copy autoconfig
+    # copy autoconfig
     cp $BASEDIR/tests/autoconfig-mysql.php $BASEDIR/core/config/autoconfig.php
 
     # trigger installation
