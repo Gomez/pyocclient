@@ -20,11 +20,6 @@ git submodule update --init
 cd $WORKDIR
 echo "New Workdir: $WORKDIR"
 
-#setup db
-mysql -e 'create database oc_autotest;'
-mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'owncloud'";
-mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost'";
-
 #
 # install script
 #
@@ -35,7 +30,7 @@ DATABASEUSER=oc_autotest
 ADMINLOGIN=admin
 BASEDIR=$PWD
 
-DBCONFIGS="mysql"
+DBCONFIGS="sqlite"
 #PHPUNIT=$(which phpunit)
 
 # use tmpfs for datadir - should speedup unit test execution
@@ -45,19 +40,15 @@ echo "Using database $DATABASENAME"
 
 mkdir tests
 
-cat > ./tests/autoconfig-mysql.php <<DELIM
+cat > ./tests/autoconfig-sqlite.php <<DELIM
 <?php
 \$AUTOCONFIG = array (
   'installed' => false,
-  'dbtype' => 'mysql',
+  'dbtype' => 'sqlite',
   'dbtableprefix' => 'oc_',
   'adminlogin' => '$ADMINLOGIN',
   'adminpass' => 'admin',
   'directory' => '$DATADIR',
-  'dbuser' => '$DATABASEUSER',
-  'dbname' => '$DATABASENAME',
-  'dbhost' => 'localhost',
-  'dbpass' => 'owncloud',
 );
 DELIM
 
@@ -73,7 +64,7 @@ function execute_tests {
     rm -rf $DATADIR
     mkdir $DATADIR
     # copy autoconfig
-    cp $BASEDIR/tests/autoconfig-mysql.php $BASEDIR/core/config/autoconfig.php
+    cp $BASEDIR/tests/autoconfig-sqlite.php $BASEDIR/core/config/autoconfig.php
 
     # trigger installation
     echo "INDEX"
