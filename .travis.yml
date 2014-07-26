@@ -1,6 +1,6 @@
 language: php
 php:
-  - 5.3
+  - "5.4"
 
 env:
   global:
@@ -12,16 +12,11 @@ branches:
 
 before_install:
 - sudo apt-get update
-- sudo apt-get install apache2 libapache2-mod-php5
-- sudo apt-get install python python-pip
 - sudo pip install requests
-- sudo a2enmod actions
-- sudo a2enmod rewrite
-- sudo sed -i -e "s,/var/www,$(pwd)/core,g" /etc/apache2/sites-available/default
-- sudo service apache2 restart
 
 install:
   - bash ./before_install.sh $CORE_BRANCH
+  - bash ./install_php_apache.sh
 
 script:
   # execute unit tests
