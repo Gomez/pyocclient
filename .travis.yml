@@ -17,6 +17,7 @@ before_install:
 install:
   - bash ./before_install.sh $CORE_BRANCH
   - bash ./install_php_apache.sh
+  - sudo service apache2 restart
 
 script:
   # execute unit tests
