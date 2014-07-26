@@ -14,6 +14,7 @@ before_install:
 - sudo apt-get update
 - sudo pip install requests
 - sudo apt-get install apache2 libapache2-mod-fastcgi
+- bash ./before_install.sh $CORE_BRANCH
 # enable php-fpm
 - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
 - sudo a2enmod rewrite actions fastcgi alias
@@ -23,9 +24,6 @@ before_install:
 - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
 - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
 - sudo service apache2 restart
-
-install:
-  - bash ./before_install.sh $CORE_BRANCH
 
 script: curl -s http://localhost/ && sudo cat /var/log/apache2/error.log && curl -s http://localhost/ | grep -F "hello world! $TRAVIS_PHP_VERSION" && curl -s http://localhost/non_existing_url_is_redirected | grep -F "hello world! $TRAVIS_PHP_VERSION" && curl -s http://mydomain.local/ | grep -F "hello world! $TRAVIS_PHP_VERSION"
 
