@@ -4,7 +4,7 @@ python:
 
 env:
   global:
-    - CORE_BRANCH=stable6
+    - CORE_BRANCH=stable5
 
 branches:
   only:
