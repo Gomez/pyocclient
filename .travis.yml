@@ -14,6 +14,11 @@ before_install:
 - sudo apt-get update
 - sudo apt-get install python-software-properties
 - sudo apt-get install python python-pip
+- sudo apt-get install apache2 libapache2-mod-php5
+- sudo a2enmod actions
+- sudo a2enmod rewrite
+- sudo sed -i -e "s,/var/www,$(pwd)/web,g" /etc/apache2/sites-available/default
+- sudo service apache2 restart
 - sudo pip install requests
 
 install:
