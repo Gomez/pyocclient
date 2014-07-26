@@ -17,7 +17,6 @@ before_install:
 install:
   - bash ./before_install.sh $CORE_BRANCH
   - bash ./install_php_apache.sh
-  - sudo service apache2 restart
 
 script: curl -s http://localhost/ && sudo cat /var/log/apache2/error.log && curl -s http://localhost/ | grep -F "hello world! $TRAVIS_PHP_VERSION" && curl -s http://localhost/non_existing_url_is_redirected | grep -F "hello world! $TRAVIS_PHP_VERSION" && curl -s http://mydomain.local/ | grep -F "hello world! $TRAVIS_PHP_VERSION"
 

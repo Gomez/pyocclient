@@ -67,6 +67,8 @@ function execute_tests {
     # copy autoconfig
     cp $BASEDIR/tests/autoconfig-sqlite.php $BASEDIR/config/autoconfig.php
 
+    chmod -R 777 $BASEDIR/config
+
     # trigger installation
     echo "INDEX"
     php -f index.php
