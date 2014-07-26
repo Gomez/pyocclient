@@ -7,7 +7,7 @@
 #
 
 set -e
-echo $(pwd)
+
 WORKDIR=$PWD
 CORE_BRANCH=$1
 echo "Work directory: $WORKDIR"
@@ -26,6 +26,5 @@ fi
 #
 # copy install script
 #
-cd core
 
 bash ./core_install.sh mysql
