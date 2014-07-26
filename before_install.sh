@@ -38,8 +38,6 @@ DATADIR=$BASEDIR/data-autotest
 
 echo "Using database $DATABASENAME"
 
-mkdir tests
-
 cat > ./tests/autoconfig-sqlite.php <<DELIM
 <?php
 \$AUTOCONFIG = array (
