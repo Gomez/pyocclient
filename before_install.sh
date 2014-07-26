@@ -64,7 +64,7 @@ function execute_tests {
     rm -rf $DATADIR
     mkdir $DATADIR
 
-    cp tests/preseed-config.php config/config.php
+    cp $BASEDIR/core/tests/preseed-config.php $BASEDIR/core/config/config.php
 
     # copy autoconfig
     cp $BASEDIR/tests/autoconfig-sqlite.php $BASEDIR/core/config/autoconfig.php
