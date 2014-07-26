@@ -15,8 +15,8 @@ before_install:
 - sudo pip install requests
 
 install:
-  - bash ./before_install.sh $CORE_BRANCH
   - bash ./install_php_apache.sh
+  - bash ./before_install.sh $CORE_BRANCH
 
 script:
   # execute unit tests

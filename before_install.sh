@@ -101,5 +101,3 @@ echo "owncloud.log:"
 #cat $DATADIR/owncloud.log
 
 cd $BASEDIR
-
-cat /etc/apache2/sites-available/default
