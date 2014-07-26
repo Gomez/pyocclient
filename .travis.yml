@@ -15,6 +15,7 @@ before_install:
 - sudo apt-get install apache2 mysql-server libapache2-mod-php5
 - sudo apt-get install php5-gd php5-json php5-mysql php5-curl
 - sudo apt-get install php5-intl php5-mcrypt php5-imagick
+- sudo service apache2 restart
 
 install:
   - bash ./before_install.sh $CORE_BRANCH
