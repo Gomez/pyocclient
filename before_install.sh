@@ -10,6 +10,7 @@ set -e
 
 WORKDIR=$PWD
 CORE_BRANCH=$1
+DB=mysql
 echo "Work directory: $WORKDIR"
 git clone --depth 1 -b $CORE_BRANCH https://github.com/owncloud/core
 cd core
