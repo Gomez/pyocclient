@@ -12,6 +12,7 @@ branches:
 
 before_install:
 - sudo apt-get update
+- sudo apt-get install -y libxml2-dev
 - sudo apt-get install apache2 mysql-server libapache2-mod-php5
 - sudo apt-get install php5-gd php5-json php5-mysql php5-curl
 - sudo apt-get install php5-intl php5-cli php5-mcrypt php5-imagick
