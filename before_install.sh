@@ -12,6 +12,8 @@ WORKDIR=$PWD
 CORE_BRANCH=$1
 echo "Work directory: $WORKDIR"
 php5 -v
+cd /usr/lib
+ls -la | grep libxml
 git clone --depth 1 -b $CORE_BRANCH https://github.com/owncloud/core
 cd core
 git submodule update --init
