@@ -23,10 +23,10 @@ sudo echo "<VirtualHost *:80>
         </Directory>
 
         # Configure PHP as CGI
-        ScriptAlias /local-bin $CGIROOT
-        DirectoryIndex index.php index.html
-        AddType application/x-httpd-php5 .php
-        Action application/x-httpd-php5 '/local-bin/php-cgi'
+        #ScriptAlias /local-bin $CGIROOT
+        #DirectoryIndex index.php index.html
+        #AddType application/x-httpd-php5 .php
+        #Action application/x-httpd-php5 '/local-bin/php-cgi'
 
 </VirtualHost>" | sudo tee /etc/apache2/sites-available/default > /dev/null
 cat /etc/apache2/sites-available/default
