@@ -10,6 +10,7 @@ echo "WEBROOT: $WEBROOT"
 echo "CGIROOT: $CGIROOT"
 sudo echo "<VirtualHost *:80>
         DocumentRoot $WEBROOT
+        SuexecUserGroup "travis" "travis"
         <Directory />
                 Options FollowSymLinks
                 AllowOverride All
