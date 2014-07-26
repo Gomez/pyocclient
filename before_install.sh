@@ -16,14 +16,16 @@ cd core
 git submodule update --init
 
 cd $WORKDIR
+echo "New Workdir: $WORKDIR"
 
 #setup db
-#mysql -e 'create database oc_autotest;'
-#mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'owncloud'";
-#mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost'";
+mysql -e 'create database oc_autotest;'
+mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'owncloud'";
+mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost'";
 
 #
 # copy install script
 #
+echo "New Workdir2: $WORKDIR"
 
 bash ./core_install.sh mysql
