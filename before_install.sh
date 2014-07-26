@@ -7,7 +7,7 @@
 #
 
 set -e
-
+echo $(pwd)
 WORKDIR=$PWD
 CORE_BRANCH=$1
 echo "Work directory: $WORKDIR"
