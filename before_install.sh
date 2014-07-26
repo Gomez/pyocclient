@@ -41,6 +41,8 @@ DATADIR=$BASEDIR/data-autotest
 
 echo "Using database $DATABASENAME"
 
+mkdir tests
+
 cat > ./tests/autoconfig-mysql.php <<DELIM
 <?php
 \$AUTOCONFIG = array (
@@ -69,7 +71,7 @@ function execute_tests {
     rm -rf $DATADIR
     mkdir $DATADIR
  # copy autoconfig
-    cp $BASEDIR/tests/autoconfig-$1.php $BASEDIR/core/config/autoconfig.php
+    cp $BASEDIR/tests/autoconfig-mysql.php $BASEDIR/core/config/autoconfig.php
 
     # trigger installation
     echo "INDEX"
