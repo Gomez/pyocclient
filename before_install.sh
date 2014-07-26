@@ -63,6 +63,9 @@ function execute_tests {
     # reset data directory
     rm -rf $DATADIR
     mkdir $DATADIR
+
+    cp tests/preseed-config.php config/config.php
+
     # copy autoconfig
     cp $BASEDIR/tests/autoconfig-sqlite.php $BASEDIR/core/config/autoconfig.php
 
