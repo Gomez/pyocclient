@@ -8,9 +8,9 @@ test_id = int(time.time())
 
 Config = {
     # Change this to your ownCloud's URL
-    'owncloud_url': 'http://localhost/owncloud',
+    'owncloud_url': 'http://localhost/',
     # ownCloud login
-    'owncloud_login': 'root',
+    'owncloud_login': 'admin',
     # ownCloud password
     'owncloud_password': 'admin',
     # remote root path to use for testing 

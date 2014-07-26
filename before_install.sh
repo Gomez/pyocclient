@@ -102,6 +102,4 @@ echo "owncloud.log:"
 
 cd $BASEDIR
 
-cd ..
 cat /etc/apache2/sites-available/default
-bash ./runtests.sh
