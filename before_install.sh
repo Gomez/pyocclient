@@ -23,7 +23,7 @@ echo "New Workdir: $WORKDIR"
 #
 # install script
 #
-cd ../core
+cd core
 
 DATABASENAME=oc_autotest
 DATABASEUSER=oc_autotest
