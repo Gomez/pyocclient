@@ -8,7 +8,7 @@ test_id = int(time.time())
 
 Config = {
     # Change this to your ownCloud's URL
-    'owncloud_url': 'http://localhost/',
+    'owncloud_url': 'http://127.0.0.1/',
     # ownCloud login
     'owncloud_login': 'admin',
     # ownCloud password
